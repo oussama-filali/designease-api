@@ -16,7 +16,7 @@ app.post('/generate-ui', (req, res) => {
         generatedCode = `
 import React from 'react';
 
-export default function Button() {
+export default function Button() {}
   return (
     <button style={{
       padding: '${size === 'large' ? '15px 30px' : '10px 20px'}',
