@@ -6,6 +6,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// 📌 Page d'accueil
+app.get('/', (req, res) => {
+    res.send('Bienvenue dans votre API generate-UI.');
+});
+
 // 📌 Génération de code UI dynamique
 app.post('/generate-ui', (req, res) => {
     const { component, text, size, color, glassmorphism, framework } = req.body;
