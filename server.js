@@ -7,14 +7,17 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // 📌 Génération de code UI dynamique
-app.post('/generate-ui', (req, res) => {
+app.get('/', (req, res) => {
+  res.send('Welcome to DesignEase API!');
+})
+
+app.post('/server.js', (req, res) => {
     const { component, text, size, color, glassmorphism, framework } = req.body;
 
     let generatedCode = '';
 
     if (component === 'button' && framework === 'react') {
         generatedCode = `
-import React from 'react';
 
 export default function Button() {}
   return (
