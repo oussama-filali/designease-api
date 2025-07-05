@@ -5,18 +5,22 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.set('views', './views'); // Dossier où seront stockées vos pages EJS
 
 // 📌 Page d'accueil
 app.get('/', (req, res) => {
-    res.send('Bienvenue dans votre API generate-UI.');
+    res.render('index', { apiKey: 'key-01f7606fb5a9f0fa7' });
 });
 
-// 📌 Génération de code UI dynamique
-app.get('/', (req, res) => {
-  res.send('Welcome to DesignEase API!');
-})
-
+// server.js
+const API_KEY = 'key-01f7606fb5a9f0fa7';
 app.post('/server.js', (req, res) => {
+    const clientKey = req.headers['x-api-key'];
+    if (clientKey !== API_KEY) {
+        return res.status(401).json({ error: 'Clé API invalide' });
+    }
+
     const { component, text, size, color, glassmorphism, framework } = req.body;
 
     let generatedCode = '';

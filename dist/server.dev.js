@@ -8,12 +8,27 @@ var bodyParser = require('body-parser');
 
 var app = express();
 app.use(cors());
-app.use(bodyParser.json()); // 📌 Génération de code UI dynamique
+app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.set('views', './views'); // Dossier où seront stockées vos pages EJS
+// 📌 Page d'accueil
 
 app.get('/', function (req, res) {
-  res.send('Welcome to DesignEase API!');
-});
+  res.render('index', {
+    apiKey: 'key-01f7606fb5a9f0fa7'
+  });
+}); // server.js
+
+var API_KEY = 'key-01f7606fb5a9f0fa7';
 app.post('/server.js', function (req, res) {
+  var clientKey = req.headers['x-api-key'];
+
+  if (clientKey !== API_KEY) {
+    return res.status(401).json({
+      error: 'Clé API invalide'
+    });
+  }
+
   var _req$body = req.body,
       component = _req$body.component,
       text = _req$body.text,
