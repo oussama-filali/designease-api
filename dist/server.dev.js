@@ -15,7 +15,7 @@ app.set('views', './views'); // Dossier où seront stockées vos pages EJS
 
 app.get('/', function (req, res) {
   res.render('index', {
-    apiKey: 'key-01f7606fb5a9f0fa7'
+    apiKey: process.env.API_KEY
   });
 }); // server.js
 
