@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import DashboardLayout from './layout/DashboardLayout';
+import Configurator from './components/Configurator';
+import Preview from './components/Preview';
+import CodeViewer from './components/CodeViewer';
+import { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [code, setCode] = useState('');
+  const [componentType, setComponentType] = useState('button');
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>DesignEase UI</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex flex-col">
+      <header className="py-8 px-6 bg-white shadow flex items-center justify-between">
+        <h1 className="text-4xl font-extrabold text-blue-700 flex items-center gap-3">
+          <span role="img" aria-label="palette">🎨</span> DesignEase Studio
+        </h1>
+        <span className="text-xs text-gray-400">Générez vos composants UI en un clic</span>
+      </header>
+      <main className="flex-1 flex flex-col md:flex-row gap-8 p-8 max-w-6xl mx-auto w-full">
+        <section className="md:w-1/2 bg-white rounded-xl shadow-lg p-8 mb-8 md:mb-0">
+          <Configurator
+            onCodeGenerated={setCode}
+            componentType={componentType}
+            setComponentType={setComponentType}
+          />
+        </section>
+        <section className="md:w-1/2 flex flex-col gap-8">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <Preview code={code} />
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <CodeViewer code={code} />
+          </div>
+        </section>
+      </main>
+      <footer className="text-center text-gray-400 py-4 text-sm">
+        © {new Date().getFullYear()} DesignEase UI
+      </footer>
+    </div>
+  );
 }
-
-export default App
