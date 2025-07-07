@@ -1,6 +1,8 @@
 const generator = require('../utils/generator');
 
 exports.generate = (req, res) => {
+  console.log('BODY:', req.body);
+
   const { component, framework, ...options } = req.body;
   console.log('API GENERATE:', { component, framework, options }); // Ajoute ce log
 
