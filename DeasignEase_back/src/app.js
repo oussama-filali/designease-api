@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 app.use(express.static(path.join(__dirname, '../public'))); // Pour plus tard si tu ajoutes CSS/JS custom
+app.use(express.static(path.join(__dirname, '../../DesignEase-ui/dist')));
 
 // Routes API
 app.use('/api/generate', generateRoute);
@@ -26,6 +27,9 @@ app.use('/api/generate', generateRoute);
 // Route d’accueil EJS
 app.get('/', (req, res) => {
   res.render('index', { apiKey: process.env.API_KEY || 'clé introuvable' });
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../DesignEase-ui/dist/index.html'));
 });
 
 // Sécurité basique

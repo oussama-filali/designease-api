@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .env
 
+# Clé privée/certificat à ne jamais versionner
+DeasignEase_back/API-ouss.pem
+DeasignEase_back/API-ouss.pem
+
