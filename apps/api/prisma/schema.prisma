@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// --------------------------------------
+// ENUMS (Gestion stricte des rôles et états)
+// --------------------------------------
+
+enum Role {
+  USER
+  ADMIN
+  CREATOR
+}
+
+enum TemplateStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// --------------------------------------
+// MODELS
+// --------------------------------------
+
+// User: Synchronisé avec Supabase Auth
+// On stocke ici les infos métier (rôles, achats)
+model User {
+  id        String   @id @default(uuid()) // ID venant de Supabase Auth
+  email     String   @unique
+  password  String   // Hash du mot de passe
+  fullName  String?
+  avatarUrl String?
+  role      Role     @default(USER)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  purchases Purchase[]
+  downloads DownloadHistory[]
+}
+
+// Category: Pour organiser les templates (e.g. "SaaS", "E-commerce", "Portfolio")
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  templates   Template[]
+}
+
+// Template: Le coeur du produit
+model Template {
+  id          String         @id @default(uuid())
+  title       String
+  slug        String         @unique
+  description String
+  price       Decimal        @default(0.00) @db.Decimal(10, 2)
+  isFree      Boolean        @default(false)
+  status      TemplateStatus @default(DRAFT)
+  
+  // Assets
+  thumbnailUrl String        // Image de couverture
+  previewUrl   String?       // Lien vers la démo live
+  fileUrl      String        // Lien sécurisé vers le zip (Supabase Storage)
+  
+  // Tech Stack (JSON pour flexibilité : ["Next.js", "Tailwind", "Prisma"])
+  technologies String[]
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  categoryId  String
+  category    Category       @relation(fields: [categoryId], references: [id])
+  purchases   Purchase[]
+  downloads   DownloadHistory[]
+}
+
+// Purchase: Historique des achats
+model Purchase {
+  id        String   @id @default(uuid())
+  amount    Decimal  @db.Decimal(10, 2)
+  status    String   // "completed", "refunded"
+  paymentId String?  // ID Stripe
+  
+  createdAt DateTime @default(now())
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  templateId String
+  template  Template @relation(fields: [templateId], references: [id])
+}
+
+// DownloadHistory: Suivi des téléchargements (Analytics + Sécurité)
+model DownloadHistory {
+  id        String   @id @default(uuid())
+  ipAddress String?
+  userAgent String?
+  downloadedAt DateTime @default(now())
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  templateId String
+  template  Template @relation(fields: [templateId], references: [id])
+}

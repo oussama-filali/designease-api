@@ -1,0 +1,12 @@
+# Prevent .env files from being committed
+*.env linguist-generated=false
+.env* linguist-generated=false
+
+# Mark as binary to prevent merge conflicts
+*.env binary
+.env.local binary
+
+# Normalize line endings
+* text=auto eol=lf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf

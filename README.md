@@ -1,58 +1,49 @@
-# DesignEase - Documentation & Guide
+# DesignEase SaaS
 
-## Présentation
-DesignEase est une application moderne permettant de générer des composants UI (React, HTML, CSS, JS) avec visualisation instantanée, dashboard de statistiques, et design inspiré de Vercel.
+A premium UI templates platform built with modern architecture.
 
-## Structure du projet
-- **DeasignEase_back_ts/** : Backend TypeScript (Express) pour l'API de génération de composants.
-- **DesignEase-ui-ts/** : Frontend TypeScript (React + Vite) pour le dashboard, la visualisation et l'import des templates.
-- **test/** : Dossier global pour les tests (backend et frontend).
-- **.gitignore, .vscode, tsconfig.json** : Fichiers de configuration essentiels.
+## Tech Stack
 
-## Fonctionnalités principales
-- Génération de composants React, HTML, CSS, JS via API backend.
-- Visualisation instantanée et interactive des templates.
-- Dashboard moderne, stats en grille Vercel, dark ultra-design.
-- Centralisation des templates JS wizards/glassmorphism.
-- API backend utilisée par le frontend.
+### Frontend (apps/web)
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Shadcn/UI
+- Framer Motion
 
-## Installation des dépendances
+### Backend (apps/api)
+- NestJS
+- Prisma ORM
+- PostgreSQL
+- JWT Auth
 
-### Backend
-```bash
-cd DeasignEase_back_ts
-npm install
-```
+### Monorepo
+- TurboRepo
 
-### Frontend
-```bash
-cd DesignEase-ui-ts
-npm install
-```
+## Getting Started
 
-## Démarrage instantané
-Un script unique permet de lancer le backend et le frontend simultanément :
-```bash
-npm run start:all
-```
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Tests
-Tous les tests sont regroupés dans le dossier `test/` à la racine. Ils couvrent :
-- API backend (routes, génération, cohérence)
-- Frontend (dashboard, visualisation, intégration API)
+2. Run development server:
+   ```bash
+   npm run dev
+   ```
 
-Pour lancer les tests :
-```bash
-npm run test
-```
+## Structure
 
-## Modifications apportées
-- Migration complète en TypeScript (backend et frontend)
-- Suppression de tous les fichiers/dossiers inutiles et doublons
-- Centralisation des templates JS wizards/glassmorphism
-- Ajout d'un dashboard moderne avec stats Vercel
-- Création d'un dossier global de tests
-- Ajout d'un script de démarrage instantané
+- `apps/web`: Frontend application
+- `apps/api`: Backend API service
+- `packages/*`: Shared packages (UI, updates to come)
 
-## Contact
-Pour toute question ou amélioration, contactez l'équipe DesignEase.
+## Refactoring Status
+
+- [x] Phase 1: Audit & Purge (Legacy code removed)
+- [x] Phase 2: Design System Foundation (Tailwind config + Utils created)
+- [x] Phase 3: Frontend Rebuild (Next.js initialized)
+- [x] Phase 4: Backend Rebuild (NestJS initialized)
+- [ ] Phase 5: Quality & Delivery (Pending tests & full implementation)
+
+This project strictly follows Clean Architecture and Atomic Design principles.
